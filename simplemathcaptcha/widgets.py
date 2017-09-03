@@ -31,16 +31,15 @@ class MathCaptchaWidget(forms.MultiWidget):
         return [None, None]
 
     def format_output(self, rendered_widgets):
-        output = super(MathCaptchaWidget, self).format_output(rendered_widgets)
-        output = '%s%s' % (self.question_html, output)
+        output = '%s%s' % (self.question_html, rendered_widgets)
         return output
 
     def render(self, name, value, attrs=None):
         # hash answer and set as the hidden value of form
         hashed_answer = self.generate_captcha()
         value = ['', hashed_answer]
-
-        return super(MathCaptchaWidget, self).render(name, value, attrs=attrs)
+        rendered_widgets = super(MathCaptchaWidget, self).render(name, value, attrs=attrs)
+        return mark_safe(self.format_output(rendered_widgets))
 
     def generate_captcha(self):
         # get operator for calculation
