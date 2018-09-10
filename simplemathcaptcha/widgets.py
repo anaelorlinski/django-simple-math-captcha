@@ -34,7 +34,7 @@ class MathCaptchaWidget(forms.MultiWidget):
         output = '%s%s' % (self.question_html, rendered_widgets)
         return output
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         # hash answer and set as the hidden value of form
         hashed_answer = self.generate_captcha()
         value = ['', hashed_answer]
